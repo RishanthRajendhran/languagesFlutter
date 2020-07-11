@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import "lang.dart";
-import "dart:async";
-import "dart:io";
+import 'dart:async';
+import 'dart:io';
 
 class AddLang extends StatefulWidget {
   @override
@@ -13,21 +13,22 @@ class _AddLangState extends State<AddLang> {
 
   String _name;
   File _image;
-  final _formKey = GlobalKey<FormState>();
+  bool Default = true;
 
+  final _formKey = GlobalKey<FormState>();
   final picker = ImagePicker();
 
   Future<void> getImage() async {
     var pickedFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
       _image = File(pickedFile.path);
+      Default = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
-    if(_image == null) {
+    if(Default) {
       return Scaffold(
         backgroundColor: Colors.grey[900],
         appBar: AppBar(
@@ -101,6 +102,9 @@ class _AddLangState extends State<AddLang> {
                     });
                   },
                 ),
+                Image(
+                  image: AssetImage("assets/default.jpg"),
+                ),
                 FlatButton(
                   onPressed: () => getImage(),
                   child: Row(
@@ -119,8 +123,8 @@ class _AddLangState extends State<AddLang> {
                 SizedBox(height: 100,),
                 FlatButton(
                   onPressed: () {
-                    if(_formKey.currentState.validate() && _image!=null) {
-                      Navigator.pop(context, Lang(name: _name, image: _image.path,userAdded: true));
+                    if(_formKey.currentState.validate()) {
+                      Navigator.pop(context, Lang(name: _name, image: "default.jpg",userAdded: false));
                     }
                   },
                   child: Row(
