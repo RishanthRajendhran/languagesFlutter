@@ -29,7 +29,7 @@ class _LanguageListState extends State<LanguageList> {
         elevation: 0,
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(30, 40, 30, 0),
+        padding: EdgeInsets.fromLTRB(30, 15, 30, 0),
         child: ListView(
           children: <Widget>[
             Column(
